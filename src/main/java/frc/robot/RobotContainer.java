@@ -42,8 +42,8 @@ public class RobotContainer {
 
   // The driver's controller
   
-  //public final SwappableController driverController;
-  public final CommandXboxController driverController = new CommandXboxController(0);
+  public final SwappableController driverController;
+  //public final CommandXboxController driverController = new CommandXboxController(0);
 
   // The operator's controller
   
@@ -60,8 +60,9 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    
     System.out.println("alliance: " +DriverStation.getAlliance());
-    ///driverController = new SwappableController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+    driverController = new SwappableController(OperatorConstants.DRIVER_CONTROLLER_PORT);
     System.out.println("Controller name" + DriverStation.getJoystickName(OperatorConstants.DRIVER_CONTROLLER_PORT));
     // Set the options to show up in the Dashboard for selecting auto modes. If you
     // add additional auto modes you can add additional lines here with
