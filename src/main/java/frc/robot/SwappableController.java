@@ -4,12 +4,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-// Removed unused import
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
+
+//import edu.wpi.first.wpilibj.Joystick;
+//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+//import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.EnumMap;
+//import java.util.EnumMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+//import java.util.Map;
 
 
 
@@ -25,245 +29,10 @@ public class SwappableController {
   /** Creates a new SwappableController. */
   private int port;
 
-  public static final class ControllerMappingsConstants{
-    public static final class XboxConstants{
-      public enum Buttons {
-        
-        kA(XboxController.Button.kA.value),
-        kB(XboxController.Button.kB.value),
-        kX(XboxController.Button.kX.value),
-        kY(XboxController.Button.kY.value),
-        kLeftBumper(XboxController.Button.kLeftBumper.value),
-        kRightBumper(XboxController.Button.kRightBumper.value),
-        // Xbox does not have a button for left trigger
-        // Xbox does not have a button for right trigger
-        kMinus(XboxController.Button.kBack.value),
-        kPlus(XboxController.Button.kStart.value),
-        kLeftStick(XboxController.Button.kLeftStick.value),
-        kRightStick(XboxController.Button.kRightStick.value),
-        kHome(XboxController.Button.kBack.value), // Xbox does not have a home button
-        kCapture(XboxController.Button.kStart.value); // Xbox does not have a capture button
-    
-        private final int value;
-    
-        Buttons(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      public enum Axes {
-        kLeftX(XboxController.Axis.kLeftX.value),
-        kLeftY(XboxController.Axis.kLeftY.value),
-        kRightX(XboxController.Axis.kRightX.value),
-        kRightY(XboxController.Axis.kRightY.value),
-        kLeftTrigger(XboxController.Axis.kLeftTrigger.value),
-        kRightTrigger(XboxController.Axis.kRightTrigger.value);
-    
-        private final int value;
-    
-        Axes(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      static Map<Buttons, Integer> ButtonsMap = new EnumMap<>(Buttons.class);
-      static {
-        for (Buttons button : Buttons.values()) {
-          ButtonsMap.put(button, button.getValue());
-        }
-      }
-      static Map<Axes, Integer> AxesMap = new EnumMap<>(Axes.class);
-      static {
-        for (Axes axis : Axes.values()) {
-          AxesMap.put(axis, axis.getValue());
-        }
-      }
-    }
-    public static final class SwitchConstants{
-      public enum Buttons {
-        kA(1),
-        kB(0),
-        kX(3),
-        kY(2),
-        kLeftBumper(4),
-        kRightBumper(5),
-        kLeftTriggerButton(6),
-        kRightTriggerButton(7),
-        kMinus(8),
-        kPlus(9),
-        kLeftStick(10),
-        kRightStick(11),
-        kHome(12),
-        kCapture(13);
-    
-        private final int value;
-    
-        Buttons(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      public enum Axes {
-        kLeftX(0),
-        kLeftY(1),
-        kRightX(2),
-        kRightY(3);
-    
-        private final int value;
-    
-        Axes(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      static Map<Buttons, Integer> ButtonsMap = new EnumMap<>(Buttons.class);
-      static {
-        for (Buttons button : Buttons.values()) {
-          ButtonsMap.put(button, button.getValue());
-        }
-      }
-      static Map<Axes, Integer> AxesMap = new EnumMap<>(Axes.class);
-      static {
-        for (Axes axis : Axes.values()) {
-          AxesMap.put(axis, axis.getValue());
-        }
-      }
-    }
-    public static final class JoystickConstants{
-      public enum Buttons {
-        kA(11),
-        kB(12),
-        kX(3),
-        kY(2),
-        kLeftBumper(4),
-        kRightBumper(1),
-        kLeftTriggerButton(6),
-        kRightTriggerButton(7),
-        kMinus(8),
-        kPlus(9),
-        kLeftStick(10),
-        kRightStick(11),
-        kHome(12),
-        kCapture(13);
-    
-        private final int value;
-    
-        Buttons(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      public enum Axes {
-        kLeftX(Joystick.AxisType.kX.value),
-        kLeftY(Joystick.AxisType.kY.value),
-        kRightX(Joystick.AxisType.kZ.value),
-        kRightY(Joystick.AxisType.kTwist.value),
-        kThrottle(Joystick.AxisType.kThrottle.value);
-    
-        private final int value;
-    
-        Axes(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      static Map<Buttons, Integer> ButtonsMap = new EnumMap<>(Buttons.class);
-      static {
-        for (Buttons button : Buttons.values()) {
-          ButtonsMap.put(button, button.getValue());
-        }
-      }
-      static Map<Axes, Integer> AxesMap = new EnumMap<>(Axes.class);
-      static {
-      for (Axes axis : Axes.values()) {
-        AxesMap.put(axis, axis.getValue());
-      }
-    }
-    }
-    public static final class Joycon2Constants{
-      public enum Buttons {
-        kA(5),
-        kB(6),
-        kX(7),
-        kY(8),
-        kLeftBumper(3),
-        kRightBumper(4),
-        kLeftTriggerButton(1),
-        kRightTriggerButton(2),
-        kMinus(14),
-        kPlus(13),
-        kLeftStick(19),
-        kRightStick(20),
-        kHome(21),
-        kCapture(22),
-        kPovRight(9),
-        kPovDown(10),
-        kPovLeft(12),
-        kPovUp(11),
-        kMapableButton1(17),
-        kMapableButton2(18),
-        kMapableButton3(15),
-        kMapableButton4(16);
-    
-        private final int value;
-    
-        Buttons(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      public enum Axes {
-        kLeftX(0),
-        kLeftY(1),
-        kRightX(2),
-        kRightY(3);
-    
-        private final int value;
-    
-        Axes(int value) {
-          this.value = value;
-        }
-    
-        public int getValue() {
-          return value;
-        }
-      }
-      static Map<Buttons, Integer> ButtonsMap = new EnumMap<>(Buttons.class);
-      static {
-        for (Buttons button : Buttons.values()) {
-          ButtonsMap.put(button, button.getValue());
-        }
-      }
-      static Map<Axes, Integer> AxesMap = new EnumMap<>(Axes.class);
-      static {
-        for (Axes axis : Axes.values()) {
-            AxesMap.put(axis, axis.getValue());
-        }
-      }
-    }
+  private static ControllerMappings controllerMappings;
 
-  }
+  
+
 
   public enum m_buttons {
     kA, kB, kX, kY, kLeftBumper, kRightBumper, kLeftTriggerButton, kRightTriggerButton,
@@ -284,12 +53,26 @@ public class SwappableController {
 
   public SwappableController(int port) {
     this.port = port;
+    //load controller mappings if not already loaded
+    if (controllerMappings == null) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            controllerMappings = objectMapper.readValue(
+                new File("src/main/java/frc/robot/ControllerMappingContants.json"),
+                ControllerMappings.class
+            );
+            System.out.println("Controller mappings loaded successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to load controller mappings.");
+        }
+    }
+
     handleControllerChange();
     
   }
 
   public void handleControllerChange() {
-    
     System.out.println("Driverstation connected: " +DriverStation.waitForDsConnection(10));
     for (int i = 0; i < DriverStation.kJoystickPorts; i++) {
       System.out.println("Joystick connected: "+ DriverStation.isJoystickConnected(i));
@@ -298,22 +81,35 @@ public class SwappableController {
     System.out.println("Handling controller change for port: " + port);
     if (DriverStation.getJoystickIsXbox(port)){
       this.activeController = (CommandXboxController) new CommandXboxController(port);
-      remapButtons(ControllerMappingsConstants.XboxConstants.ButtonsMap, ControllerMappingsConstants.XboxConstants.AxesMap);
+      remapButtons("Xbox");
     } else if (DriverStation.getJoystickName(port).toLowerCase().contains("extreme 3d pro")) {
       this.activeController = (CommandJoystick) new CommandJoystick(port);
-      remapButtons(ControllerMappingsConstants.JoystickConstants.ButtonsMap, ControllerMappingsConstants.JoystickConstants.AxesMap);
+      remapButtons("extreme 3d pro");
+    /* 
     } else if (DriverStation.getJoystickName(port).toLowerCase().contains("wireless gamepad")) {
       this.activeController = (CommandGenericHID) new CommandGenericHID(port);
-      remapButtons(ControllerMappingsConstants.SwitchConstants.ButtonsMap, ControllerMappingsConstants.SwitchConstants.AxesMap);
+      remapButtons("wireless gamepad");
     } else if (DriverStation.getJoystickName(port).toLowerCase().contains("vjoy device")) {
       this.activeController = (CommandGenericHID) new CommandGenericHID(port);
-      remapButtons(ControllerMappingsConstants.Joycon2Constants.ButtonsMap, ControllerMappingsConstants.Joycon2Constants.AxesMap);
+      remapButtons("vjoy device");
+    */
     } else{
-      System.out.println("Controller type not recognized or unsupported. Using generic HID controller.");
-      System.out.println("Joystick Name: " + DriverStation.getJoystickName(port));
-      System.out.println("Joystick Type: " + DriverStation.getJoystickType(port));
-      System.out.println("Joystick Is Xbox: " + DriverStation.getJoystickIsXbox(port));
-      this.activeController = (CommandGenericHID) new CommandGenericHID(port); // Handle other types or invalid cases
+        try {
+            remapButtons(DriverStation.getJoystickName(port).toLowerCase());
+        } catch (Exception e) {
+            if (e.getMessage().contains("Controller type not found")) {
+                //CONTROLLER NOT FOUND
+                System.out.println(e.getMessage());
+                System.out.println("Controller type not recognized or unsupported. Using generic HID controller.");
+                System.out.println("Joystick Name: " + DriverStation.getJoystickName(port));
+                System.out.println("Joystick Type: " + DriverStation.getJoystickType(port));
+                System.out.println("Joystick Is Xbox: " + DriverStation.getJoystickIsXbox(port));
+                this.activeController = (CommandGenericHID) new CommandGenericHID(port); // Handle other types or invalid cases
+            } else {
+                throw e; // Rethrow if it's a different exception
+            }
+        }
+      
     }
     SmartDashboard.putString("controller", activeController.toString());
   }
@@ -322,30 +118,49 @@ public class SwappableController {
     return activeController;
   }
 
-  void remapButtons(Map<> buttonMapping, Map<? extends Enum<?>, Integer> axisMapping) {
-    ControllerMappingsConstants.Joycon2Constants.
-    System.out.println("buttons remaped");
+  void remapButtons(String controllerType) {
+    ControllerMappings.Controller controller = null;
+    // Get the specific controller mappings from the in-memory data
+    if (controllerType == "Xbox"){
+        controller = controllerMappings.ControllerMappings.get("Xbox");
+    } else{
+        controller = controllerMappings.ControllerMappings.get(controllerType);
+        if (controller == null) {
+            throw new IllegalArgumentException("Controller type not found: " + controllerType);
+        }
+    }
+    
+
+    // Clear existing mappings
     m_ButtonsMap.clear();
     m_AxesMap.clear();
 
     // Map buttons
-    for (m_buttons button : buttonMapping.keySet()) {
+    for (Map.Entry<String, Integer> entry : controller.Buttons.entrySet()) {
         try {
-            m_ButtonsMap.put((m_buttons) button, buttonMapping.get(button));
+            m_ButtonsMap.put(m_buttons.valueOf(entry.getKey()), entry.getValue());
         } catch (IllegalArgumentException e) {
-            System.out.println("Button " + button.name() + " does not exist in this controller mapping.");
+            System.out.println("Button " + entry.getKey() + " does not exist in this controller mapping.");
+            // Handle the case where the button does not exist in the mapping
+            //m_ButtonsMap.put(m_buttons.valueOf(entry.getKey()), null);
         }
     }
 
     // Map axes
-    for (Enum<?> axis : axisMapping.keySet()) {
+    for (Map.Entry<String, Integer> entry : controller.Axes.entrySet()) {
         try {
-            m_AxesMap.put((m_axes) axis, axisMapping.get(axis));
+            m_AxesMap.put(m_axes.valueOf(entry.getKey()), entry.getValue());
         } catch (IllegalArgumentException e) {
-            System.out.println("Axis " + axis.name() + " does not exist in this controller mapping.");
+            System.out.println("Axis " + entry.getKey() + " does not exist in this controller mapping.");
+            // Handle the case where the axis does not exist in the mapping
+            //m_AxesMap.put(m_axes.valueOf(entry.getKey()), null);
         }
     }
+
+    System.out.println("Buttons and axes remapped for controller: " + controllerType);
+
 }
+
   //only use the pov methods from this class, not the pov methods from the CommandGenericHID class as they won't work with all controllers
   public CommandGenericHID getActiveController() {
     return activeController;
