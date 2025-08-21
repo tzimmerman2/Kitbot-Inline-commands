@@ -1,3 +1,4 @@
+
 {
     "ControllerMappings": {
         "Xbox": {
@@ -28,20 +29,20 @@
         "wireless gamepad": {
             "ReadableName": "SwitchController",
             "Buttons": {
-                "kA": 1,
-                "kB": 0,
-                "kX": 3,
-                "kY": 2,
-                "kLeftBumper": 4,
-                "kRightBumper": 5,
-                "kLeftTriggerButton": 6,
-                "kRightTriggerButton": 7,
-                "kMinus": 8,
-                "kPlus": 9,
-                "kLeftStick": 10,
-                "kRightStick": 11,
-                "kHome": 12,
-                "kCapture": 13
+                "kA": 2,
+                "kB": 1,
+                "kX": 4,
+                "kY": 3,
+                "kLeftBumper": 5,
+                "kRightBumper": 6,
+                "kLeftTriggerButton": 7,
+                "kRightTriggerButton": 8,
+                "kMinus": 9,
+                "kPlus": 10,
+                "kLeftStick": 11,
+                "kRightStick": 12,
+                "kHome": 13,
+                "kCapture": 14
             },
             "Axes": {
                 "kLeftX": 0,

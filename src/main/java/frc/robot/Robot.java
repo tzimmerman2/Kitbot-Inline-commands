@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  private int i=0;
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -35,13 +36,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    SmartDashboard.putBoolean("Controller Connected: ",false);
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    // Used to track usage of Kitbot code, please do not remove.
-    HAL.report(tResourceType.kResourceType_Framework, 10);
+    
   }
 
   /**
@@ -56,7 +57,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("Controller Connected: ",(m_robotContainer.driverController.isConnected()));
+    
+    SmartDashboard.putBoolean("Controller Connected: ",(DriverStation.isJoystickConnected(0)));
     //SmartDashboard.putString("ActiveController",m_robotContainer.driverController.getActiveController().toString());
     //System.out.println("controller name: " + DriverStation.getJoystickName(0));
     SmartDashboard.putString("controller name: ", DriverStation.getJoystickName(0));
