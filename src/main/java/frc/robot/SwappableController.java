@@ -33,9 +33,25 @@ import java.net.FileNameMap;
 
 
 import edu.wpi.first.wpilibj2.command.Command;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class SwappableController {
+
+
+  public class ControllerMappings {
+      public Map<String, Controller> ControllerMappings;
+
+      public static class Controller {
+          @JsonProperty("ReadableName") // Map the "ReadableName" property in JSON to this field
+          public String Name;
+          
+          public Map<String, Integer> Buttons;
+          public Map<String, Integer> Axes;
+      }
+  }
   
   /** Creates a new SwappableController. */
   private int port;
