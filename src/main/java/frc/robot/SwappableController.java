@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -97,18 +98,19 @@ public class SwappableController {
     this.port = port;
     //load controller mappings if not already loaded
     if (controllerMappings == null) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            controllerMappings = objectMapper.readValue(
-                new File("src/main/java/frc/robot/ControllerMappingContants.json"),
-                ControllerMappings.class
-            );
-            System.out.println("Controller mappings loaded successfully.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Failed to load controller mappings.");
-            throw new RuntimeException("Failed to load controller mappings", e);
-        }
+      try {
+          ObjectMapper objectMapper = new ObjectMapper();
+          File deployDirectory = Filesystem.getDeployDirectory();
+          File mappingsFile = new File(deployDirectory, "ControllerMappingContants.json");
+          
+          controllerMappings = objectMapper.readValue(
+              mappingsFile,
+              ControllerMappings.class
+          );
+          System.out.println("Controller mappings loaded successfully.");
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
     }
 
     handleControllerChange();
