@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SwappableController {
 
 
-  public class ControllerMappings {
+  public static class ControllerMappings {
       public Map<String, Controller> ControllerMappings;
 
       public static class Controller {
